@@ -31,7 +31,7 @@ def get_mongo_db_collection(username, password):
         }
     
 def clean_data(dataframe):
-    columns_to_drop = ['audio_features.type', 'audio_features.id', 'audio_features.uri', 'audio_features.track_href', 'audio_features.analysis_url']
+    columns_to_drop = ['audio_features.type', 'audio_features.id', 'audio_features.uri', 'audio_features.analysis_url']
     dataframe.drop(columns=columns_to_drop, axis=1, inplace=True)
     dataframe['artists'] = [', '.join([artist['name'] for artist in x]) for x in dataframe['artists']]
     return dataframe.dropna(axis=0)

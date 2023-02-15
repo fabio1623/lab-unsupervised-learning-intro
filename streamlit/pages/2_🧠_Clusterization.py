@@ -10,10 +10,9 @@ st.set_page_config(
 )
 
 def clean_data(dataframe):
-    columns_to_drop = ['audio_features.type', 'audio_features.id', 'audio_features.uri', 'audio_features.track_href', 'audio_features.analysis_url']
+    columns_to_drop = ['audio_features.type', 'audio_features.id', 'audio_features.uri', 'audio_features.analysis_url', 'audio_features.track_href']
     dataframe.drop(columns=columns_to_drop, axis=1, inplace=True)
-    dataframe['name'] = dataframe['name'].str.lower()
-    dataframe['artists'] = [', '.join([artist['name'].lower() for artist in x]) for x in dataframe['artists']]
+    dataframe['artists'] = [', '.join([artist['name'] for artist in x]) for x in dataframe['artists']]
     return dataframe.dropna(axis=0)
 
 def load_data(mongo_db_collection):
@@ -28,7 +27,7 @@ def load_data(mongo_db_collection):
 def clusterize_data(dataframe):
     with st.spinner('Clusterizing data...'):
         X = dataframe.drop(['_id', 'name', 'artists'], axis=1)
-        y = dataframe['name']
+        y = dataframe['_id']
 
         model = KMeans(n_clusters=9)
         min_max_scaler = MinMaxScaler().fit(X)

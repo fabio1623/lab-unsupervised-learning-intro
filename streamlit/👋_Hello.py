@@ -8,5 +8,6 @@ st.set_page_config(
 
 st.write("# Ready for some song recommendation?")
 
-image = Image.open('content/hotpot.png')
-st.image(image, use_column_width='always')
+with st.container():
+    image = Image.open('content/giphy.gif')
+    st.image(image)
